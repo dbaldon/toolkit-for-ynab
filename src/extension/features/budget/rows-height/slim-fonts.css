@@ -1,0 +1,44 @@
+.budget-table-header {
+  height: auto !important;
+}
+
+.budget-table-header-labels {
+  height: 1.3rem !important;
+}
+
+.budget-table-cell-available-payment {
+  font-size: 0px;
+  position: absolute;
+  right: -15px;
+  top: 5px;
+}
+
+.budget-table-row.is-master-category,
+.budget-table-row.is-sub-category,
+.budget-table-cell-margin,
+.budget-table-cell-checkbox,
+.budget-table-cell-collapse,
+.budget-table-cell-name,
+.budget-table-cell-budgeted,
+.budget-table-cell-activity,
+.budget-table-cell-available,
+.tk-budget-table-cell-pacing {
+  height: 1.6em !important;
+  font-size: 0.8rem !important;
+}
+
+.budget-table-cell-checkbox .ynab-checkbox {
+  font-size: 1rem;
+}
+
+.tk-budget-table-cell-pacing,
+.ynab-new-budget-available-number,
+.budget-table-cell-available .ynab-new-budget-available-number {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.budget-table-cell-budgeted .ynab-new-currency-input {
+  height: 1.3rem;
+  align-items: center;
+}

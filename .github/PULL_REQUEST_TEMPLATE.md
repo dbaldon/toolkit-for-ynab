@@ -1,11 +1,6 @@
-Github Issue (if applicable): #XXX
+GitHub Issue (if applicable): #XXX
 
 Trello Link (if applicable):
 
-Forum Link (if applicable):
-
-#### Explanation of Bugfix/Feature/Enhancement:
-
-
-
-#### Recommended Release Notes:
+**Explanation of Bugfix/Feature/Modification:**
+A clear and concise description of what changes you've made and why.

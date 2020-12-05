@@ -1,0 +1,31 @@
+body,
+body.theme-new-default {
+  --tk-color-goal-fill: #16a3364d;
+  --tk-color-pacing-fill: #c0e2e9;
+  --tk-color-progress-bar-month-indicator: gray;
+}
+
+body.theme-dark {
+  --tk-color-goal-fill: #16a3364d;
+  --tk-color-pacing-fill: #405f86;
+}
+
+body.theme-classic {
+  --tk-color-goal-fill: #16a3364d;
+  --tk-color-pacing-fill: #c0e2e9;
+}
+
+/* Fix position of head monthly progress indicator by moving the bg slightly to the right and making it shorter. Also move the text back */
+.budget-table-row.is-master-category .budget-table-cell-name {
+  padding-left: 0.5rem;
+  width: 39%;
+}
+.budget-table-cell-name-static-width {
+  margin-left: -0.4rem;
+}
+
+.budget-table-row.is-checked,
+.budget-table-row.is-checked .budget-table-cell-name,
+.budget-table-row.is-checked .budget-table-cell-budgeted {
+  background: var(--table_row_background_selected) !important;
+}

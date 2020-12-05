@@ -1,0 +1,39 @@
+.tk-categories-filter-input {
+  float: right;
+  border-radius: 0.4em;
+  border: 1px solid #009cc2;
+  color: #009cc2;
+  font-style: italic;
+  outline: none;
+  padding: 0.3rem 0.3rem 0.3rem 1.6rem;
+  z-index: 10;
+}
+
+.tk-categories-filter-input:focus {
+  border-width: 1px !important;
+}
+
+.tk-categories-filter-wrapper {
+  position: relative;
+}
+
+.tk-categories-filter-icon {
+  color: #009cc2;
+  left: 0.6em;
+  position: absolute;
+  top: 0.55em;
+  z-index: 11;
+}
+
+.tk-categories-filter-cancel-icon {
+  color: #009cc2;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0.12rem;
+  z-index: 11;
+}
+
+.tk-categories-filter-hidden {
+  display: none !important;
+}

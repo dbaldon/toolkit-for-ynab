@@ -1,0 +1,21 @@
+.collapsed-buttons {
+  margin-top: 42px;
+}
+
+.tk-toggle-privacy {
+  color: var(--sidebar_text_default);
+  padding: 1rem;
+}
+
+.tk-toggle-privacy__icon {
+  font-size: 1rem;
+}
+
+.sidebar.sidebar-resized-collapsed .sidebar-bottom {
+  height: auto;
+  flex-direction: column;
+}
+
+.sidebar.sidebar-resized-collapsed .sidebar-bottom .tk-toggle-privacy {
+  padding: 0.5rem;
+}

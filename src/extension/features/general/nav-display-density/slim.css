@@ -1,0 +1,22 @@
+.nav-main {
+  margin-bottom: 0px !important;
+}
+
+.nav-main li {
+  height: 2rem !important;
+  margin: 0 !important;
+}
+
+.nav-main li a {
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.nav-main svg {
+  margin-left: 15px !important;
+}
+
+.tk-navlink i {
+  padding-left: 15px !important;
+  margin-right: 15px !important;
+}

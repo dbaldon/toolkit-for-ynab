@@ -1,0 +1,7 @@
+.nav-main .tk-react-reports-link {
+  cursor: pointer;
+}
+
+.nav-main .tk-react-reports-link.active a .flaticon {
+  color: #fed168;
+}

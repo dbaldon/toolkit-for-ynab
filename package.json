@@ -1,47 +1,154 @@
 {
   "name": "toolkit-for-ynab",
+  "version": "2.30.0",
   "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "babel-cli": "^6.7.7",
-    "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2016": "^6.22.0",
-    "chokidar": "^1.6.0",
-    "colors": "^1.1.2",
-    "css-loader": "^0.28.4",
-    "eslint": "^2.13.1",
-    "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-import-resolver-webpack": "^0.8.1",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-import": "^1.16.0",
-    "glob": "^7.1.1",
-    "to-string-loader": "^1.1.5",
-    "webpack": "^2.2.1"
-  },
   "scripts": {
-    "develop": "./watch",
-    "webpack": "webpack",
-    "legacy-eslint": "eslint -c .eslintrc.js --ignore-path .eslintignore ./source",
-    "legacy-eslint-fix": "eslint -c .eslintrc.js --ignore-path .eslintignore ./ --fix",
-    "legacy-babel": "babel source --compact false --quiet --ignore source/common/res/features/lib/*,source/common/assets/*,*.min.js --out-dir src",
-    "gen-settings": "node tasks/generateSettings",
-    "gen-featureIndex": "node tasks/generateFeatureIndex",
-    "gen-feedChanges": "python generateFeedChanges.py"
+    "build:check": "yarn && yarn gen && yarn lint",
+    "build:beta": "yarn build:check && yarn webpack:beta && yarn build:legacy && yarn manifest:beta && yarn compress",
+    "build:dev": "yarn build:development",
+    "build:development": "yarn build:check && yarn webpack:development && yarn build:legacy && yarn manifest:development",
+    "build:prod": "yarn build:production",
+    "build:production": "yarn build:check && yarn webpack:production && yarn build:legacy && yarn compress",
+    "build:legacy": "babel src/extension/legacy --quiet --no-babelrc --compact false --config-file ./.babelrc-legacy --out-dir dist/extension/web-accessibles/legacy",
+    "build:webpack": "webpack",
+    "compress": "yarn compress:dist && yarn compress:src",
+    "compress:dist": "node scripts/compressDist.js",
+    "compress:src": "node scripts/compressSrc.js",
+    "deploy:beta": "git fetch origin master:beta && git push origin beta",
+    "manifest:beta": "node scripts/applyManifestOverrides.js --env=beta",
+    "manifest:development": "node scripts/applyManifestOverrides.js --env=development",
+    "webpack:beta": "yarn build:webpack --env.buildType=beta",
+    "webpack:development": "yarn build:webpack --env.buildType=development",
+    "webpack:production": "yarn build:webpack --env.buildType=production",
+    "lint": "eslint --ignore-path .eslintignore ./src ./scripts || exit 0",
+    "lint:fix": "eslint --fix --ignore-path .eslintignore ./src ./scripts",
+    "publish:chrome": "node scripts/publishForChrome.js",
+    "publish:desktop": "node scripts/publishForDesktop.js",
+    "prettier": "prettier --write \"{src,scripts}/**/*.{js,jsx}\"",
+    "test": "yarn && yarn gen && jest",
+    "watch": "yarn && node scripts/watch.js",
+    "gen": "yarn gen:settings && yarn gen:featureIndex && yarn gen:feedChanges",
+    "gen:featureIndex": "node scripts/generateFeatureIndex",
+    "gen:feedChanges": "node scripts/generateFeedChanges",
+    "gen:settings": "node scripts/generateSettings",
+    "gen:docs": "yarn gen:settings && node scripts/generateDocs",
+    "l10n:update": "node scripts/updateLocalizationStrings.js",
+    "l10n:pull": "scripts/get_l10ns",
+    "sentry:create": "sentry-cli releases -o toolkit-for-ynab -p toolkit-for-ynab new $npm_package_version",
+    "sentry:upload": "sentry-cli releases -o toolkit-for-ynab -p toolkit-for-ynab files $$npm_package_version upload-sourcemaps ./dist/extension/"
   },
-  "babel": {
-    "presets": [
-      "es2016"
-    ]
+  "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageReporters": [
+      "lcov"
+    ],
+    "moduleNameMapper": {
+      "toolkit/(.*)": "<rootDir>/src/$1",
+      "toolkit-reports/(.*)": "<rootDir>/src/extension/features/toolkit-reports/$1",
+      "\\.(scss|css)$": "<rootDir>/src/test/mocks/style-mock.js"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/test/setup.js"
+    ],
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "reporters": [
+      "jest-dot-reporter"
+    ],
+    "testURL": "https://app.youneedabudget.com/aaaaaaaa-bbbb-cccc-dddd-000000000000/budget/201802",
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   },
   "defaultFeatures": [
-    "activityTransactionLink",
-    "budgetBalanceToZero",
-    "enlargeCategoriesDropdown",
+    "BudgetBalanceToZero",
+    "BulkEditMemo",
+    "EnlargeCategoriesDropdown",
+    "FilterCategories",
+    "IncomeVsExpenseHoverHighlight",
     "PrintingImprovements",
-    "rightClickToEdit",
-    "showIntercom",
-    "splitKeyboardShortcut",
-    "reports"
-  ]
+    "RightClickToEdit",
+    "ShowIntercom",
+    "SplitKeyboardShortcut",
+    "ToggleAccountColumns",
+    "ToolkitReports"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "core-js": "2",
+    "fuzzysort": "^1.1.4",
+    "highcharts": "7.2.2",
+    "jquery": "^3.5.0",
+    "raven-js": "^3.25.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-markdown": "^4.2.2",
+    "regression": "^2.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-syntax-object-rest-spread": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "acorn": "^8.0.1",
+    "acorn-class-fields": "^0.3.7",
+    "acorn-jsx": "^5.2.0",
+    "acorn-static-class-features": "^0.2.4",
+    "archiver": "^3.1.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.4",
+    "chokidar": "^3.1.1",
+    "chrome-webstore-upload": "0.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "colors": "^1.1.2",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.2",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "jest-dot-reporter": "^1.0.3",
+    "jest-localstorage-mock": "^2.1.0",
+    "node-sass": "^4.9.4",
+    "prettier": "^1.16.4",
+    "pretty-quick": "^1.10.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "terminate": "^2.1.0",
+    "to-string-loader": "^1.1.5",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "yargs": "^14.0.0"
+  },
+  "engines": {
+    "node": "^8.16.0 || ^10.13.0 || >=11.10.1",
+    "yarn": ">=1.10.0"
+  }
 }

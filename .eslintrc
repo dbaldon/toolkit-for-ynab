@@ -1,0 +1,61 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest/globals": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["import", "jest", "react", "prettier"],
+  "settings": {
+    "import/resolver": "webpack",
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": ["airbnb-base/legacy", "plugin:react/recommended", "plugin:prettier/recommended"],
+  "globals": {
+    "$": true,
+    "Chart": true,
+    "Ember": true,
+    "Intercom": true,
+    "chrome": true,
+    "ensureDefaultsAreSet": true,
+    "jQuery": true,
+    "moment": true,
+    "safari": true,
+    "windowReload": true,
+    "ynab": true,
+    "ynabToolKit": true,
+    "YNABFEATURES": true,
+    "browser": true,
+    "Components": true,
+    "__ynabapp__": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "class-methods-use-this": "off",
+    "consistent-return": "off",
+    "default-case": "off",
+    "func-names": "off",
+    "global-require": "off",
+    "guard-for-in": "off",
+    "no-alert": "off",
+    "no-console": "off",
+    "no-nested-ternary": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "no-restricted-syntax": "off",
+    "no-shadow": ["error", { "allow": ["resolve", "reject", "error"] }],
+    "radix": "off",
+    "vars-on-top": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
+  }
+}
